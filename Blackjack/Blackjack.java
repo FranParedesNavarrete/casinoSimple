@@ -72,7 +72,7 @@ public class Blackjack extends JFrame  implements ActionListener{
 	 * Create the frame.
 	 */
 	public Blackjack() {
-		setResizable(true);
+		setResizable(false);
 		setTitle("Blackjack");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 100, 550, 450);
@@ -120,11 +120,11 @@ public class Blackjack extends JFrame  implements ActionListener{
 		btnReplay = new JButton("Replay");
 		btnReplay.addActionListener(this);
 		
-		JLabel lblPlayer = new JLabel("Tu: ");
+		JLabel lblPlayer = new JLabel("You: ");
 		lblPlayer.setBounds(30, 230, 49, 14);
 		contentPane.add(lblPlayer);
 		
-		JLabel lblCrupier = new JLabel("Crupier: ");
+		JLabel lblCrupier = new JLabel("Croupier: ");
 		lblCrupier.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCrupier.setBounds(201, 190, 58, 14);
 		contentPane.add(lblCrupier);
@@ -183,21 +183,21 @@ public class Blackjack extends JFrame  implements ActionListener{
 	
 	public void ganador() {
 		if ((puntosCrupier == puntosPlayer) && puntosCrupier != 0) {
-			JOptionPane.showMessageDialog(null, "Empate");
+			JOptionPane.showMessageDialog(null, "Draw");
 			System.exit(0);
 		} 
 		if (puntosPlayer == 21 || puntosCrupier == 21) {
 			JOptionPane.showMessageDialog(null, "¡¡Blackjack!!");
 			System.exit(0);
 		} else if(puntosPlayer > 21) {
-			JOptionPane.showMessageDialog(null, "Gana la casa");
+			JOptionPane.showMessageDialog(null, "You Lost");
 			System.exit(0);
 		}
 		if ((puntosCrupier < 21 && puntosCrupier > puntosPlayer) || puntosPlayer > 21) {
-			JOptionPane.showMessageDialog(null, "Gana la casa");
+			JOptionPane.showMessageDialog(null, "You Lost");
 			System.exit(0);
 		}else if(puntosCrupier > 21){
-			JOptionPane.showMessageDialog(null, "¡¡Ganaste!!");
+			JOptionPane.showMessageDialog(null, "¡¡You Win!!");
 			System.exit(0);
 		}
 	}	
