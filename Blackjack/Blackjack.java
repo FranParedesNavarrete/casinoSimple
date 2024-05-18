@@ -22,23 +22,27 @@ import java.awt.Color;
 import javax.swing.UIManager;
 import java.awt.Component;
 import javax.swing.Box;
+import javax.swing.ImageIcon;
+
 import java.awt.Font;
 import javax.swing.JTextArea;
 import java.awt.SystemColor;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class Blackjack extends JFrame  implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtValorArriba;
-	private JTextField txtValorAbajo;
-	private JTextField txtColor;
 	private JPanel pnlCartasCrupier;
 	private JPanel pnlCartasPlayer;
 	private JButton btnPass;
 	private JButton btnCatch;
-	private JLabel lblPuntosCrupier;
-	private JLabel lblPuntosPlayer;
+	private JButton btnExit;
+	private JButton btnReplay;
+	private JLabel lblCarta;
 	
 	private carta cartaActual = Utilidades.nuevaCarta();
 	private int puntosCrupier = 0;
@@ -71,7 +75,7 @@ public class Blackjack extends JFrame  implements ActionListener{
 		setResizable(true);
 		setTitle("Blackjack");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(300, 100, 450, 350);
+		setBounds(300, 100, 550, 450);
 		contentPane = new JPanel();
 		
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -80,149 +84,158 @@ public class Blackjack extends JFrame  implements ActionListener{
 		
 		contentPane.setLayout(null);
 		
-		ponerCarta();
+		addElements();
+
+	}
+
+	public void addElements() {
+		lblCarta = new JLabel("");
+		lblCarta.setBounds(370, 5, 133, 174);
+		lblCarta.setIcon(new ImageIcon("src/Blackjack/ImagenesCartas/reverso.png"));
+		contentPane.add(lblCarta);
 		
 		pnlCartasCrupier = new JPanel();
-		pnlCartasCrupier.setBounds(30, 20, 265, 115);
+		pnlCartasCrupier.setBounds(30, 20, 301, 162);
 		contentPane.add(pnlCartasCrupier);
-		pnlCartasCrupier.setLayout(new GridLayout(4,0));
+		pnlCartasCrupier.setLayout(new GridLayout(0,4));
 		
 		pnlCartasPlayer = new JPanel();
-		pnlCartasPlayer.setBounds(30, 190, 265, 115);
+		pnlCartasPlayer.setBounds(30, 250, 301, 162);
 		contentPane.add(pnlCartasPlayer);
-		pnlCartasPlayer.setLayout(new GridLayout(4, 0));
+		pnlCartasPlayer.setLayout(new GridLayout(0, 4));
 		
 		btnPass = new JButton("PASS");
-		btnPass.setBounds(313, 206, 105, 27);
+		btnPass.setBounds(385, 207, 105, 27);
 		btnPass.addActionListener(this);
 		contentPane.add(btnPass);
 		
 		btnCatch = new JButton("CATCH");
-		btnCatch.setBounds(313, 245, 105, 27);
+		btnCatch.setBounds(385, 245, 105, 27);
 		btnCatch.addActionListener(this);
 		contentPane.add(btnCatch);
 		
+		btnExit = new JButton("Exit");
+		btnExit.addActionListener(this);
+		
+		btnReplay = new JButton("Replay");
+		btnReplay.addActionListener(this);
+		
 		JLabel lblPlayer = new JLabel("Tu: ");
-		lblPlayer.setBounds(30, 171, 49, 14);
+		lblPlayer.setBounds(30, 230, 49, 14);
 		contentPane.add(lblPlayer);
 		
-		JTextField lblPuntosPlayer = new JTextField(puntosPlayer + "");
-		lblPuntosPlayer.setBounds(57, 171, 49, 14);
-		contentPane.add(lblPuntosPlayer);
-		
 		JLabel lblCrupier = new JLabel("Crupier: ");
-		lblCrupier.setBounds(201, 149, 58, 14);
+		lblCrupier.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCrupier.setBounds(201, 190, 58, 14);
 		contentPane.add(lblCrupier);
 		
-		JTextField lblPuntosCrupier = new JTextField(puntosCrupier + "");
+		JTextField lblPuntosCrupier = new JTextField("0");
+		lblPuntosCrupier.setEditable(false);
 		lblPuntosCrupier.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPuntosCrupier.setBounds(236, 149, 49, 14);
+		lblPuntosCrupier.setBounds(256, 190, 49, 14);
 		contentPane.add(lblPuntosCrupier);
 		
-
-	}
-
-	public void ponerCarta() {
-		txtValorAbajo = new JTextField(cartaActual.getValor() + "");
-		txtValorAbajo.setCaretColor(new Color(0, 0, 0));
-		txtValorAbajo.setEditable(false);
-		txtValorAbajo.setColumns(10);
-		txtValorAbajo.setBounds(400, 149, 30, 30);
-		contentPane.add(txtValorAbajo);
-		
-		txtValorArriba = new JTextField(cartaActual.getValor() + "");
-		txtValorArriba.setCaretColor(new Color(0, 0, 0));
-		txtValorArriba.setEditable(false);
-		txtValorArriba.setColumns(10);
-		txtValorArriba.setBounds(297, 5, 30, 30);
-		contentPane.add(txtValorArriba);
-		
-		txtColor = new JTextField(cartaActual.getNombre());
-		txtColor.setCaretColor(new Color(0, 0, 0));
-		txtColor.setHorizontalAlignment(SwingConstants.CENTER);
-		txtColor.setEditable(false);
-		txtColor.setBounds(313, 80, 104, 21);
-		contentPane.add(txtColor);
-		txtColor.setColumns(10);
-	}
-
-	public void guardarCarta(carta cartaGuardada, JPanel panel) {
-		txtValorAbajo = new JTextField(cartaGuardada.getValor() + "");
-		txtValorAbajo.setFont(new Font("Dialog", Font.PLAIN, 8));
-		txtValorAbajo.setCaretColor(new Color(0, 0, 0));
-		txtValorAbajo.setEditable(false);
-		txtValorAbajo.setColumns(10);
-		txtValorAbajo.setBounds(59, 100, 15, 15);
-		panel.add(txtValorAbajo);
-		
-		
-		txtValorArriba = new JTextField(cartaGuardada.getValor() + "");
-		txtValorArriba.setFont(new Font("Dialog", Font.PLAIN, 8));
-		txtValorArriba.setCaretColor(new Color(0, 0, 0));
-		txtValorArriba.setEditable(false);
-		txtValorArriba.setColumns(10);
-		txtValorArriba.setBounds(0, 0, 15, 15);
-		panel.add(txtValorArriba);
-		
-		txtColor = new JTextField(cartaGuardada.getNombre());
-		txtColor.setFont(new Font("Dialog", Font.PLAIN, 8));
-		txtColor.setCaretColor(new Color(0, 0, 0));
-		txtColor.setHorizontalAlignment(SwingConstants.CENTER);
-		txtColor.setEditable(false);
-		txtColor.setBounds(12, 49, 50, 21);
-		txtColor.setColumns(10);
-		panel.add(txtColor);
-		
+		guardarCarta(cartaActual, pnlCartasPlayer, cartaActual.getValor(), true);
 	}
 	
-	public void actualizarPuntaje() {
-		JTextField lblPuntosPlayer = new JTextField(puntosPlayer + "");
-		lblPuntosPlayer.setBounds(57, 171, 49, 14);
-		contentPane.add(lblPuntosPlayer);
+	public void actualizarPuntaje(int puntos, boolean turno) {
+		if(turno) {
+			puntosPlayer += puntos;
+			JTextField lblPuntosPlayer = new JTextField((puntosPlayer)+ "");
+			lblPuntosPlayer.setHorizontalAlignment(SwingConstants.CENTER);
+			lblPuntosPlayer.setEditable(false);
+			lblPuntosPlayer.setBounds(57, 230, 49, 14);
+			contentPane.add(lblPuntosPlayer);
+
+		}else {
+			puntosCrupier += puntos;
+			JTextField lblPuntosCrupier = new JTextField((puntosCrupier) + "");
+			lblPuntosCrupier.setEditable(false);
+			lblPuntosCrupier.setHorizontalAlignment(SwingConstants.CENTER);
+			lblPuntosCrupier.setBounds(256, 190, 49, 14);
+			contentPane.add(lblPuntosCrupier);
+		}
+	}
+	
+	public int cambiarValorAs(carta carta, int puntos) {
+		if(carta.getValor() == 1 && puntos < 11) return 11;
+		else return carta.getValor();
+	}
+
+	
+	public void addCarta(carta cartaGuardada, JPanel panel) {
+		panel.setLayout(new GridLayout(0, 4));
+		JLabel lblCarta = new JLabel(new ImageIcon(cartaGuardada.getImagen()));
+		panel.add(lblCarta);
+		panel.revalidate();
+		delay();
+	}
+	
+	public void guardarCarta(carta cartaEntrada, JPanel panel, int puntos, boolean turno) {
+		carta cartaSalida = cartaEntrada;
 		
-		JTextField lblPuntosCrupier = new JTextField(puntosCrupier + "");
-		lblPuntosCrupier.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPuntosCrupier.setBounds(236, 149, 49, 14);
-		contentPane.add(lblPuntosCrupier);
+		addCarta(cartaSalida, panel);
+		
+		actualizarPuntaje(cambiarValorAs(cartaSalida, puntos), turno);
+		
+		cartaActual = Utilidades.nuevaCarta();
 	}
 	
 	public void ganador() {
-		if (puntosCrupier == 21 || (puntosCrupier < 21 && puntosCrupier > puntosPlayer) || puntosPlayer > 21) {
+		if ((puntosCrupier == puntosPlayer) && puntosCrupier != 0) {
+			JOptionPane.showMessageDialog(null, "Empate");
+			System.exit(0);
+		} 
+		if (puntosPlayer == 21 || puntosCrupier == 21) {
+			JOptionPane.showMessageDialog(null, "¡¡Blackjack!!");
+			System.exit(0);
+		} else if(puntosPlayer > 21) {
 			JOptionPane.showMessageDialog(null, "Gana la casa");
 			System.exit(0);
-		}else if (puntosPlayer == 21 || ((puntosPlayer < 21 && puntosPlayer > puntosCrupier) || puntosCrupier > 21) && puntosCrupier != 0) {
+		}
+		if ((puntosCrupier < 21 && puntosCrupier > puntosPlayer) || puntosPlayer > 21) {
+			JOptionPane.showMessageDialog(null, "Gana la casa");
+			System.exit(0);
+		}else if(puntosCrupier > 21){
 			JOptionPane.showMessageDialog(null, "¡¡Ganaste!!");
 			System.exit(0);
 		}
-	}
+	}	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnPass) {
-			while(puntosCrupier < 22) {
-				carta cartaCrupier = cartaActual;
+			for(int i = 1; puntosCrupier < 21; i++) {
+				ganador();
 				
-				puntosCrupier += cartaCrupier.getValor();
-				
-				guardarCarta(cartaCrupier, pnlCartasCrupier);
+				guardarCarta(cartaActual, pnlCartasCrupier, puntosCrupier, false);
+				ganador();
 			}
+			actualizarPuntaje(puntosCrupier, rootPaneCheckingEnabled);
 			
 		}else if (e.getSource() == btnCatch) {
-			carta cartaPlayer = cartaActual;
-			
-			puntosPlayer += cartaPlayer.getValor();
-			
-			guardarCarta(cartaPlayer, pnlCartasPlayer);
-		}
-		
-		cartaActual = Utilidades.nuevaCarta();
-		
-		actualizarPuntaje();
-		
-		ponerCarta();
+			guardarCarta(cartaActual, pnlCartasPlayer, puntosPlayer, true);
+			ganador();
 
-		ganador();
-		
-		System.out.println(puntosCrupier + " y " + puntosPlayer);
+		}
+		if (e.getSource() == btnReplay) {
+			if (e.getSource() == btnPass) {
+				for(int i = 1; puntosCrupier < 21; i++) {
+					ganador();
+					
+					delay();
+					guardarCarta(cartaActual, pnlCartasCrupier, puntosCrupier, false);
+					delay();
+				}
+			}
+		}
+	}
+	
+	public void delay() {
+		try {
+			wait(1000);
+		} catch(Exception e) {
+			
+		}
 	}
 }
